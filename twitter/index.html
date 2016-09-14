@@ -6,7 +6,7 @@
  var counterRef = document.querySelector("#counterBox");
  txtBoxRef.addEventListener("keydown",function(){
   var remLength = 0;
-  remLength = 9999 - parseInt(txtBoxRef.value.length);
+  remLength = parseInt(txtBoxRef.value.length);
   if(remLength < 0)
    {
     txtBoxRef.value = txtBoxRef.value.substring(0, 9999);
