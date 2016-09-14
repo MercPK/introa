@@ -1,26 +1,17 @@
-<html>
-    <head>
-    </head>
-
-     <body>
-<textarea name="myTextBox" cols="50" rows="5" style="background-color:#FCF5D8;color:#AD8C08;border:5px double #AD8C08;">
-Enter some text...
-</textarea>
-<br />
-  <button type="button" onclick="formSubmit()">Submit</button>
-         
-    </body>
-    
-    <script>
-    //JS Goes here
-        function formSubmit(){
-         //handle form submit here
-            
-            
-        }
-        var promt= " what is your tweet"
-        var length= tweet.length;
-        length=length -50
-        prompt( "tweet is"+length+ "character too longer")
-    </script>
-</html>
+<input type="text" id="txtBox"/>
+<br>
+<input type="text" id="counterBox"/>
+<script>
+ var txtBoxRef = document.querySelector("#txtBox");
+ var counterRef = document.querySelector("#counterBox");
+ txtBoxRef.addEventListener("keydown",function(){
+  var remLength = 0;
+  remLength = 9999 - parseInt(txtBoxRef.value.length);
+  if(remLength < 0)
+   {
+    txtBoxRef.value = txtBoxRef.value.substring(0, 9999);
+    return false;
+   }
+  counterRef.value = remLength + " characters remaining...";
+ },true);
+</script>
