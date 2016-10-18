@@ -1,13 +1,163 @@
+<html>
+<head></head>
+<body>
+<canvas id="myCanvas" width="800" height="400"></canvas>
+<p id="player1">Player 1 Score: 0</p>
+<p id="player2">Player 2 Score: 0</p>
 <script>
-"MEcPk hacker"
-    alert ("oi")
-    alert ("quanto tempo ne kkkkk")
-    alert ("mesmo nos se conhecendo pelo um grupo e foi meio que estranho ne:3")
-    alert ("seriao foi muito estranho")
-    alert ("um dia vamos fazer com que os nossos sonhos se realizem")
-    alert ("se um dia voce pensar em desistir do seus sonhos ou ficar triste ou deprimida vc pode se apoiar em min para tudo")
-    alert ("eu estarei sempre ao seu lado para o que der e vier vamos passar pelas dificuldades juntos")
-    alert ("vamos lutar para que cada um de nois realiza o sonhos de cada um")
-    alert (" EU TE AMO E SEMPRE VOU TE AMAR ISSO E FATO TA PROVADO")
-    alert (" FELIZ NIVER PRINCESA")
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
+	
+	var xdirection = 1;
+	var slope = 0;
+	var myReq;
+	var player1Score = 0;
+	var player2Score = 0;
+
+	//this is an object
+	var rectangle1 = {
+		x: 0,
+		y: 0,
+		width: 20,
+		height: 100
+	}
+	var rectangle2 = {
+		x: 780,
+		y: 0,
+		width: 20,
+		height: 100 
+	}
+	var theBall = {
+		x: 400,
+		y: 200,
+		radius: 15
+	}
+
+	function drawBall() {
+		ctx.beginPath();
+		ctx.arc(theBall.x, theBall.y, theBall.radius, 0, Math.PI*2);
+		ctx.fill();
+		ctx.closePath();
+	}
+	function deleteBall() {
+		ctx.arc(theBall.x - 1, theBall.y - 1 , theBall.radius + 2, 0, Math.PI*2);
+		ctx.clip();
+		ctx.clearRect(0,0,800,800);
+	}
+	function deleteRectangle(withRectangle){
+		ctx.clearRect(withRectangle.x, withRectangle.y, withRectangle.width, withRectangle.height)
+	}
+	function drawRectangle(withRectangle){
+		ctx.beginPath();
+		ctx.rect(withRectangle.x, withRectangle.y, withRectangle.width, withRectangle.height);
+		ctx.fill();
+	}
+	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+	function animate() {
+		ctx.beginPath();
+		ctx.arc(theBall.x, theBall.y, theBall.radius + 1, 0, Math.PI*2);
+		ctx.save();
+		ctx.clip();
+		ctx.closePath();
+		ctx.clearRect(0,0,800,800);
+		ctx.restore();
+		//modify
+		theBall.x = theBall.x + (xdirection * 5);
+		theBall.y = (slope * theBall.x) + theBall.y;
+
+		ctx.beginPath();
+		ctx.arc(theBall.x, theBall.y, theBall.radius, 0, Math.PI*2);
+		ctx.closePath();
+		ctx.fill();
+		hitTest();
+		myReq = requestAnimationFrame(animate);
+	}
+	function hitTest(){
+		var dx2 = rectangle2.x - (theBall.x + theBall.radius);
+		var dx1 = (theBall.x -theBall.radius) - rectangle1.width;
+		var ymin2 = rectangle2.y;
+		var ymax2 = rectangle2.y + rectangle2.height;
+		var ymin1 = rectangle1.y;
+		var ymax1 = rectangle1.y + rectangle1.height;
+
+		if (dx2 <= 0 && theBall.y > ymin2 && theBall.y < ymax2) {
+			xdirection = -1;
+			slope = (Math.random() * 0.006) - 0.003;
+		}  else if (dx1 <= 0 && theBall.y > ymin1 && theBall.y < ymax1) {
+			xdirection = 1;
+			slope = (Math.random() * 0.006) - 0.003;
+		} else if (theBall.x < 0) {
+			//player 2 scores a point
+			window.cancelAnimationFrame(myReq);
+			slope = 0;
+			theBall.y = 200;
+			theBall.x = 400;
+			drawBall();
+			player2Score++;
+			document.getElementById("player2").innerHTML = "Player 2 Score: " + player2Score;
+			setTimeout(function(){ 
+				requestAnimationFrame(animate);
+			}, 3000);
+		}  else if (theBall.x > 800) {
+			//player 1 scores a point
+			window.cancelAnimationFrame(myReq);
+			slope = 0;
+			theBall.y = 200;
+			theBall.x = 400;
+			drawBall();
+			player1Score++;
+			document.getElementById("player1").innerHTML = "Player 1 Score: " + player1Score;
+			setTimeout(function(){ 
+				requestAnimationFrame(animate);
+			}, 3000);
+		} else {
+		
+		}
+	}
+
+
+	drawRectangle(rectangle1);
+	drawRectangle(rectangle2);
+	drawBall();
+	setTimeout(function(){ 
+		requestAnimationFrame(animate);
+	}, 3000);
+
+
+	document.addEventListener('keydown', function(event) {
+	    if(event.keyCode == 80) {
+			//up arrow, P key
+			deleteRectangle(rectangle2);
+			rectangle2.y = rectangle2.y - 10.0;
+			drawRectangle(rectangle2);
+
+	    }
+	    else if(event.keyCode == 76) {
+			//down arrow, L key
+			deleteRectangle(rectangle2);
+			rectangle2.y = rectangle2.y + 10.0;
+			drawRectangle(rectangle2);
+
+	    } 
+	     else if(event.keyCode == 81) {
+			//up arrow, Q key
+			deleteRectangle(rectangle1);
+			rectangle1.y = rectangle1.y - 10.0;
+			drawRectangle(rectangle1);
+
+	    }  else if(event.keyCode == 65) {
+			//down arrow, A key
+			deleteRectangle(rectangle1);
+			rectangle1.y = rectangle1.y + 10.0;
+			drawRectangle(rectangle1);
+
+	    } 
+	});
+
+
+
+
 </script>
+</body>
+</html>
