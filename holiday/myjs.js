@@ -51,7 +51,7 @@ function backImage(){
 $('#forwardBtn').on('click', forwardImage);
 $('#backBtn').on('click', backImage);
 
-var name = prompt("Gual e o seu nome?");
-var outputString = "Em Homenagem a todos os meus amigos, " + name + "!";
+var name = prompt("What is your name?");
+var outputString = "THANKS FOR BEING MY FRIENDS AND I APRECIATE FOR EVERYTHING, " + name + "!";
 $('h1').html(outputString);
 
