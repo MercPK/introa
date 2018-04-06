@@ -1,36 +1,38 @@
-var imageArray = [
-	"https://scontent.fijd1-1.fna.fbcdn.net/v/t1.0-9/25299177_1331702946973862_228908318722312710_n.jpg?_nc_cat=0&oh=5d582d57413df4b30a234e02fecfc4dc&oe=5B61627E",
-	"https://scontent.fijd1-1.fna.fbcdn.net/v/t1.0-9/26167866_1687702604628305_6087321719617207305_n.jpg?_nc_cat=0&oh=15bbd1adc8e40b28ee57e2a5a0148333&oe=5B2AA66E",
-];
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Delius+Unicase" rel="stylesheet">
+	<link rel="stylesheet" href="stylesheet.css">
+</head>       
+<body>
+    
+<div class="bigWrapper">
+	<h1 class="centerMe"></h1>
+
+    <iframe title="YouTube video player" class="youtube-player" type="text/html" 
+width="840" height="390" src="http://www.youtube.com/embed/W-Q7RMpINVo"
+frameborder="0" allowFullScreen></iframe>
+
+    <div id="photoWrapper">
+		<img src="" id="thePhoto">
+		<button id="backBtn" type="button">Back</button>
+		<button id="forwardBtn" type="button">Forward</button>
+	</div>
+	<p class="centerMe">Thanks</p>
+    
+    
+    
+    
+    <div id="piechart"></div>
+</div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"
+        type="text/javascript"></script>
+<script src="myjs.js" type="text/javascript"></script>
+
+
+</body>
+</html>
 
 
 
-var currentIndex = 0;
-
-function renderImage(){
-	if (currentIndex < 0) {
-		currentIndex = imageArray.length - 1;
-	} else if (currentIndex >= imageArray.length) {
-		currentIndex = 0;
-	}
-
-	$('#thePhoto').attr('src', imageArray[currentIndex]);
-}
-renderImage();
-
-function forwardImage(){
-	currentIndex++;
-	renderImage();
-}
-
-function backImage(){
-	currentIndex--;
-	renderImage();
-}
-
-$('#forwardBtn').on('click', forwardImage);
-$('#backBtn').on('click', backImage);
-
-var name = prompt("What is your name?");
-var outputString = "THANKS, " + name + "!";
-$('h1').html(outputString);
